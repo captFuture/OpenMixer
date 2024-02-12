@@ -24,11 +24,12 @@ unsigned long oldMillisTWO = 0;
 long randNumber;    
 
 struct Serving {
-  int servestatus =0;
+  int servestatus = 0;
   int pump0  = 0;
   int pump1  = 0;
   int pump2  = 0;
   int pump3  = 0;
+  int pump4  = 0;
   bool tare = true;
   int weight = 0;
   int led1 = 0;
@@ -40,14 +41,16 @@ Serving serving;
 int olddisplay = 3;
 
 #define ARRAYSIZE 10
-String pumps[ARRAYSIZE] = { "liquid0", "liquid1", "liquid2", "liquid3" };
+String pumps[ARRAYSIZE] = { "liquid0", "liquid1", "liquid2", "liquid3", "liquid4"};
 const char *shout[ARRAYSIZE] = { "/shout/woooh.mp3", "/shout/bastard.mp3", "/shout/beautiful.mp3", "/shout/shutup.mp3", "/shout/bitemy.mp3", "/shout/hellopeasants.mp3", "/shout/gonnado.mp3", "/shout/imbender.mp3", "/shout/omg.mp3", "/shout/youkidding.mp3"};
 
 struct Config {
+  char liquid0[40] = xstr(LIQUID0);
   char liquid1[40] = xstr(LIQUID1);
   char liquid2[40] = xstr(LIQUID2);
   char liquid3[40] = xstr(LIQUID3);
-  char liquid0[40] = xstr(LIQUID0);
+  char liquid4[40] = xstr(LIQUID4);
+
   char clientId[40] = xstr(CLIENTID);
   char ssid[60] = xstr(SSID);
   char password[60] = xstr(PASSWORD);
@@ -82,7 +85,7 @@ int buttonPress;
 int timeout = 500;
 int LoadCellok = 0;
 
-int complete = atoi(config.liquid1) + atoi(config.liquid2) + atoi(config.liquid3); // 100% bar height ~ 40+20+150=210
+int complete = atoi(config.liquid0) + atoi(config.liquid1) + atoi(config.liquid2) + atoi(config.liquid3) + atoi(config.liquid4);// 100% bar height ~ 40+20+150=210
 float maxheight = 200;
 float factor = maxheight/complete;
 
@@ -92,7 +95,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_sprintf.htm
 */
 
 const char statusFormat[] = "{\"n\":\"%s\", \"ip\":\"%s\", \"rssi\":%d, \"s\":\"ONLINE\"}";
-const char servingFormat[] = "{\"p1\":\"%d\", \"p2\":\"%d\", \"p3\":\"%d\", \"p4\":\"%d\", \"w\":\"%d\"}";
+const char servingFormat[] = "{\"p0\":\"%d\", \"p1\":\"%d\", \"p2\":\"%d\", \"p3\":\"%d\", \"p4\":\"%d\", \"w\":\"%d\"}";
 
 
 const long  gmtOffset_sec = 3600;
@@ -104,9 +107,9 @@ char msg1[1024];
 char encmsg[1024];
 char sdmsg[2000];
 
-char encTopic[] = "bender/cocktail/enc";
-char plainTopic[] = "bender/cocktail/plain";
-char statusTopic[] = "bender/cocktail/status";
-char servingTopic[] = "bender/cocktail/serving";
-char inTopic[] = "bender/cocktail/cmd";
+char encTopic[] = "openmixer/cocktail/enc";
+char plainTopic[] = "openmixer/cocktail/plain";
+char statusTopic[] = "openmixer/cocktail/status";
+char servingTopic[] = "openmixer/cocktail/serving";
+char inTopic[] = "openmixer/cocktail/cmd";
 char clearSDcommand[] = "clearsd";

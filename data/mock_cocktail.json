@@ -1,0 +1,36 @@
+{
+    "cocktail": {
+        "ingredient": [
+            {
+                "id": "0",
+                "name": "lemon",
+                "pumpnum": "1",
+                "gamount": "10"
+            },
+            {
+                "id": "1",
+                "name": "vodka",
+                "pumpnum": "2",
+                "gamount": "20"
+            },
+            {
+                "id": "2",
+                "name": "sparklingwater",
+                "pumpnum": "3",
+                "amount": "200"
+            },
+            {
+                "id": "3",
+                "name": "rum",
+                "pumpnum": "4",
+                "amount": "20"
+            },
+            {
+                "id": "4",
+                "name": "coke",
+                "pumpnum": "5",
+                "amount": "160"
+            }
+        ]
+    }
+}
