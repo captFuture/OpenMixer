@@ -10,10 +10,11 @@
 #define DEBUG_INFORMATION true
 #define DEBUG_INFORMATION_SERIAL if(DEBUG_INFORMATION)Serial
 
-#define DEBUG_NTPClient true
-
 #define SAVE_SD
 bool SDinserted = false;
+
+int totalLength;       //total size of firmware
+int currentLength = 0; //current size of written firmware
 
 unsigned long pauseONE = 10000; //10 seconds
 unsigned long oldMillisONE = 0;
@@ -43,6 +44,8 @@ Serving serving;
 int olddisplay = 3;
 
 #define ARRAYSIZE 10
+#define FWversion xstr(VERSION)
+
 String pumps[ARRAYSIZE] = { "liquid0", "liquid1", "liquid2", "liquid3", "liquid4", "liquid5", "liquid7", "liquid7"};
 const char *shout[ARRAYSIZE] = { "/shout/woooh.mp3", "/shout/bastard.mp3", "/shout/beautiful.mp3", "/shout/shutup.mp3", "/shout/bitemy.mp3", "/shout/hellopeasants.mp3", "/shout/gonnado.mp3", "/shout/imbender.mp3", "/shout/omg.mp3", "/shout/youkidding.mp3"};
 
@@ -61,6 +64,8 @@ struct Config {
   char password[60] = xstr(PASSWORD);
   bool NETworkmode = true;
   char version[20] = xstr(VERSION);
+  char mode[20] = xstr(MODE);
+  int pumps = xstr(PUMPS);
 };
 Config config;
 

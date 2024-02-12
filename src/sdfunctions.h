@@ -10,17 +10,21 @@ void initializeSD(){
     if(SDinserted){
         if (SD.exists("/drinks.csv")) {
             DEBUG_INFORMATION_SERIAL.println("drinks.csv exists.");
-            File drinksFile = SD.open("/drinks.csv", FILE_APPEND);
+            File drinksFile = SD.open("/madedrinks.csv", FILE_APPEND);
             drinksFile.println("exists NEW DATA ----------");
             drinksFile.close();
         } else {
-            DEBUG_ERROR_SERIAL.println("drinks.csv doesn't exist.");
-            File drinksFile = SD.open("/drinks.csv", FILE_WRITE);
+            DEBUG_ERROR_SERIAL.println("madedrinks.csv doesn't exist.");
+            File drinksFile = SD.open("/madedrinks.csv", FILE_WRITE);
             int written = drinksFile.println("does not exist NEW FILE ----------");
             DEBUG_INFORMATION_SERIAL.println(written);
             drinksFile.close();
         }
     }
+}
+
+void initializeSD(){
+    //https://github.com/espressif/arduino-esp32/blob/master/libraries/SD/examples/SD_Test/SD_Test.ino
 }
 
 void readConfig(){
@@ -50,6 +54,7 @@ void readConfig(){
         strlcpy(config.ssid, doc["ssid"] | xstr(SSID), sizeof(config.ssid));
         strlcpy(config.password, doc["password"] | xstr(PASSWORD), sizeof(config.password));
         config.NETworkmode = doc["networkmode"] | false;
+
         configFile.close();
     }else{
         DEBUG_INFORMATION_SERIAL.println("SD not present - config not readable");

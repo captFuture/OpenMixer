@@ -1,5 +1,5 @@
 #include <ArduinoJson.h>
-#include <PubSubClient.h>
+#include <HTTPClient.h>
 #include "globals.h"
 #include <Arduino.h>
 #include <M5Stack.h>
@@ -12,13 +12,16 @@
 #include <SPI.h>
 #include <WiFiUdp.h>
 #include <ESPmDNS.h>
-#include <ArduinoOTA.h>
+#include <Update.h>
 
 /* wifimanager */
 #include <WiFiManager.h>
 
+#define FWURL "http://www.mrtarantl.online/ota/openmixer/openmixer_v" 
+
+
 WiFiClient wifiClient;
-PubSubClient client(wifiClient);
+HTTPClient httpclient;
 HX711_ADC LoadCell(HX711_dout, HX711_sck);
 
 UNIT_4RELAY relay;
@@ -60,7 +63,8 @@ void setup() {
 
   DEBUG_INFORMATION_SERIAL.print("Networkmode: "); DEBUG_INFORMATION_SERIAL.println(config.NETworkmode); 
   DEBUG_INFORMATION_SERIAL.println();
-  DEBUG_INFORMATION_SERIAL.println("Starting... Bender");
+  DEBUG_INFORMATION_SERIAL.print("Current firmware: v");  Serial.println(FWversion);
+  DEBUG_INFORMATION_SERIAL.println("Starting...");
 
   #include <network.h>
   #include <loadcell.h>
@@ -76,40 +80,14 @@ void setup() {
   randomSeed(analogRead(0));
 
  if(config.NETworkmode){
-    ArduinoOTA
-    .onStart([]() {
-      String type;
-      if (ArduinoOTA.getCommand() == U_FLASH)
-        type = "sketch";
-      else // U_SPIFFS
-        type = "filesystem";
-
-      // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-      Serial.println("Start updating " + type);
-    })
-    .onEnd([]() {
-      Serial.println("\nEnd");
-    })
-    .onProgress([](unsigned int progress, unsigned int total) {
-      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-    })
-    .onError([](ota_error_t error) {
-      Serial.printf("Error[%u]: ", error);
-      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-      else if (error == OTA_END_ERROR) Serial.println("End Failed");
-    });
-
-  ArduinoOTA.begin();
+    checkupdate();
  }
 
 }
 
 void loop() {
   M5.update();
-  client.loop();
+  
   buttonHandling();
   updateDisplay();
 
@@ -119,7 +97,7 @@ void loop() {
   }
 
  if(config.NETworkmode){
-    ArduinoOTA.handle();
+
     delay(100);
   }
   
