@@ -14,6 +14,7 @@
 
 #define SAVE_SD
 bool SDinserted = false;
+int mqttretries = 10;
 
 unsigned long pauseONE = 10000; //10 seconds
 unsigned long oldMillisONE = 0;
@@ -29,9 +30,6 @@ struct Serving {
   int pump2  = 0;
   int pump3  = 0;
   int pump4  = 0;
-  int pump5  = 0;
-  int pump6  = 0;
-  int pump7  = 0;
   bool tare = true;
   int weight = 0;
   int led1 = 0;
@@ -43,7 +41,7 @@ Serving serving;
 int olddisplay = 3;
 
 #define ARRAYSIZE 10
-String pumps[ARRAYSIZE] = { "liquid0", "liquid1", "liquid2", "liquid3", "liquid4", "liquid5", "liquid7", "liquid7"};
+String pumps[ARRAYSIZE] = { "liquid0", "liquid1", "liquid2", "liquid3", "liquid4"};
 const char *shout[ARRAYSIZE] = { "/shout/woooh.mp3", "/shout/bastard.mp3", "/shout/beautiful.mp3", "/shout/shutup.mp3", "/shout/bitemy.mp3", "/shout/hellopeasants.mp3", "/shout/gonnado.mp3", "/shout/imbender.mp3", "/shout/omg.mp3", "/shout/youkidding.mp3"};
 
 struct Config {
@@ -52,13 +50,15 @@ struct Config {
   char liquid2[40] = xstr(LIQUID2);
   char liquid3[40] = xstr(LIQUID3);
   char liquid4[40] = xstr(LIQUID4);
-  char liquid5[40] = xstr(LIQUID5);
-  char liquid6[40] = xstr(LIQUID6);
-  char liquid7[40] = xstr(LIQUID7);
 
   char clientId[40] = xstr(CLIENTID);
   char ssid[60] = xstr(SSID);
   char password[60] = xstr(PASSWORD);
+  char mqttserver[60] = xstr(MQTTSERVER);
+  char mqttuser[60] = xstr(MQTTUSER);
+  char mqttpwd[60] = xstr(MQTTPWD);
+  char mqttport[5] = xstr(MQTTPORT);
+  char ntpserver[40] = xstr(NTPSERVER);
   bool NETworkmode = true;
   char version[20] = xstr(VERSION);
 };
@@ -85,7 +85,7 @@ int buttonPress;
 int timeout = 500;
 int LoadCellok = 0;
 
-int complete = atoi(config.liquid0) + atoi(config.liquid1) + atoi(config.liquid2) + atoi(config.liquid3) + atoi(config.liquid4) + atoi(config.liquid5) + atoi(config.liquid6) + atoi(config.liquid7);
+int complete = atoi(config.liquid0) + atoi(config.liquid1) + atoi(config.liquid2) + atoi(config.liquid3) + atoi(config.liquid4);// 100% bar height ~ 40+20+150=210
 float maxheight = 200;
 float factor = maxheight/complete;
 
@@ -95,7 +95,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_sprintf.htm
 */
 
 const char statusFormat[] = "{\"n\":\"%s\", \"ip\":\"%s\", \"rssi\":%d, \"s\":\"ONLINE\"}";
-const char servingFormat[] = "{\"p0\":\"%d\", \"p1\":\"%d\", \"p2\":\"%d\", \"p3\":\"%d\", \"p4\":\"%d\", , \"p5\":\"%d\", \"p6\":\"%d\", \"p7\":\"%d\", \"w\":\"%d\"}";
+const char servingFormat[] = "{\"p0\":\"%d\", \"p1\":\"%d\", \"p2\":\"%d\", \"p3\":\"%d\", \"p4\":\"%d\", \"w\":\"%d\"}";
 
 
 const long  gmtOffset_sec = 3600;
@@ -107,9 +107,9 @@ char msg1[1024];
 char encmsg[1024];
 char sdmsg[2000];
 
-/*char encTopic[] = "openmixer/cocktail/enc";
+char encTopic[] = "openmixer/cocktail/enc";
 char plainTopic[] = "openmixer/cocktail/plain";
 char statusTopic[] = "openmixer/cocktail/status";
 char servingTopic[] = "openmixer/cocktail/serving";
 char inTopic[] = "openmixer/cocktail/cmd";
-char clearSDcommand[] = "clearsd";*/
+char clearSDcommand[] = "clearsd";

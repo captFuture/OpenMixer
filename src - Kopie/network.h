@@ -15,6 +15,10 @@ if(config.NETworkmode){
       DEBUG_INFORMATION_SERIAL.println(WiFi.localIP());
     }
       
+    int mqttport = atoi(config.mqttport);
+    client.setServer(config.mqttserver, mqttport);
+    client.setCallback(callback);
+    initManagedDevice();
   }else{     
 
 }

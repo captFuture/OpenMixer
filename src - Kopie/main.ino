@@ -3,25 +3,31 @@
 #include "globals.h"
 #include <Arduino.h>
 #include <M5Stack.h>
-#include <SPIFFS.h>
-#include <HX711_ADC.h>
-
+#include <base64.h>
 #include "UNIT_4RELAY.h"
+#include <SPIFFS.h>
 
-/* wifi  */
+#include <HX711_ADC.h>
+#include <EEPROM.h>
+#include <ESP32Time.h>
+struct tm timeinfo;
+ESP32Time rtc(3600);
+
+/* wifi and ntp */
 #include <SPI.h>
+#include <time.h>
 #include <WiFiUdp.h>
 #include <ESPmDNS.h>
 #include <ArduinoOTA.h>
+#include <timeclient.h>
 
 /* wifimanager */
 #include <WiFiManager.h>
 
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
-HX711_ADC LoadCell(HX711_dout, HX711_sck);
-
 UNIT_4RELAY relay;
+HX711_ADC LoadCell(HX711_dout, HX711_sck);
 
 TaskHandle_t servetask;
 TaskHandle_t measuretask;
@@ -35,6 +41,8 @@ unsigned long t = 0;
 #include <display.h>
 #include <sdfunctions.h>
 #include <functions.h>
+#include <mqttfunctions.h>
+
 #include <servetask.h>
 #include <measuretask.h>
 
@@ -47,7 +55,7 @@ void setup() {
   M5.Lcd.setBrightness(200);
   M5.Lcd.setCursor(10,10);
   M5.lcd.setTextSize(2);
-  M5.Lcd.println(VERSION);
+  M5.Lcd.printnln(VERSION);
   Wire.begin();
   initializeSD(); 
   readConfig();
@@ -120,6 +128,11 @@ void loop() {
 
  if(config.NETworkmode){
     ArduinoOTA.handle();
+    if (!client.connected()) {
+      DEBUG_INFORMATION_SERIAL.println("Not connected - go to reconnect");
+      reconnect();
+    }
+    client.loop();
     delay(100);
   }
   

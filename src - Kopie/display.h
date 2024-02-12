@@ -46,6 +46,7 @@ void showBar(int slone, int sltwo, int slthree, float factor){
   //Todo - showing an actual bar
 }
 
+
 void switchDisplay(int onoff){
   if(onoff == 0){
     M5.Lcd.sleep();
@@ -95,12 +96,15 @@ void showLoadStatus(){
 }
 
 void showDrinkWindow(){
+  //if(oldweight != serving.weight){
     M5.Lcd.fillRect(29, 215, 40, 18, LIGHTGREY);
+  //}
     M5.Lcd.drawRoundRect(148, 0, 171, 238, 15, TFT_DARKGREY);
     M5.Lcd.setCursor(10,225);
     M5.Lcd.setTextColor(BLACK);
     M5.lcd.setTextSize(2);
     M5.Lcd.drawNumber(serving.weight, 30, 216);
+    //oldweight = serving.weight;
 }
 
 void updateDisplay(){

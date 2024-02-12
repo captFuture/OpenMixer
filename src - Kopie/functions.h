@@ -12,13 +12,13 @@ String ip2Str(IPAddress ip){
 
 void buttonHandling(){
   if (M5.BtnB.pressedFor(5000)) {
-    //clearSDcontent();
+    clearSDcontent();
     buttonPress = 0;
     delay(2000);
   }
 
   if (M5.BtnC.pressedFor(5000)) {
-    //writeSDcontent();
+    writeSDcontent();
     buttonPress = 0;
     delay(2000);
   }

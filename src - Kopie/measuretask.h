@@ -20,6 +20,7 @@ void measuretaskCode(void* pvParameters) {
         //Serial.print("measuretask running on core ");
         //Serial.println(xPortGetCoreID());
         loadCellHandling();
+
         delay(200);
     }
 }
