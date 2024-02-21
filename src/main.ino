@@ -5,7 +5,6 @@
 #include <M5Stack.h>
 #include <SPIFFS.h>
 #include <HX711_ADC.h>
-
 #include "UNIT_4RELAY.h"
 
 /* wifi  */
@@ -17,9 +16,6 @@
 /* wifimanager */
 #include <WiFiManager.h>
 
-#define FWURL "http://www.mrtarantl.online/ota/openmixer/openmixer_v" 
-
-
 WiFiClient wifiClient;
 HTTPClient httpclient;
 HX711_ADC LoadCell(HX711_dout, HX711_sck);
@@ -28,13 +24,12 @@ UNIT_4RELAY relay;
 
 TaskHandle_t servetask;
 TaskHandle_t measuretask;
-TaskHandle_t displaytask;
 
 const int calVal_eepromAdress = 0;
 unsigned long t = 0;
 
 /* additional */
-
+#include <filedownload.h>
 #include <display.h>
 #include <sdfunctions.h>
 #include <functions.h>
@@ -79,15 +74,12 @@ void setup() {
   setDisplay(serving.displaypage);
   randomSeed(analogRead(0));
 
- if(config.NETworkmode){
-    checkupdate();
- }
 
 }
 
 void loop() {
   M5.update();
-  
+
   buttonHandling();
   updateDisplay();
 

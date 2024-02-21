@@ -14,7 +14,4 @@ if(config.NETworkmode){
       DEBUG_INFORMATION_SERIAL.print("IP address: ");
       DEBUG_INFORMATION_SERIAL.println(WiFi.localIP());
     }
-      
-  }else{     
-
-}
+}else{}

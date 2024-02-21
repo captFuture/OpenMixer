@@ -1,0 +1,16 @@
+{
+    "cocktail": {
+        "ingredient": [
+            {
+                "id": "0",
+                "name": "Averna",
+                "gamount": "20"
+            },
+            {
+                "id": "1",
+                "name": "Zitrone",
+                "gamount": "10"
+            }
+        ]
+    }
+}

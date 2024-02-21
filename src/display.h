@@ -3,24 +3,24 @@ void setDisplay(int state){
     switch (state){
       case 0:
         if(SDinserted == true){
-          M5.Lcd.drawJpgFile(SD, "/bender_bg.jpg");
+          M5.Lcd.drawJpgFile(SD, "/design/main_bg.jpg");
         }else{
-          M5.Lcd.drawJpgFile(SPIFFS, "/bender_bg.jpg");
+          M5.Lcd.drawJpgFile(SPIFFS, "/main_bg.jpg");
         }
         olddisplay = state;
       break;
       case 1:
         M5.Lcd.clear();
         if(SDinserted == true){
-          M5.Lcd.drawJpgFile(SD, "/slurm_bg.jpg");
+          M5.Lcd.drawJpgFile(SD, "/design/done_bg.jpg");
         }else{
-          M5.Lcd.drawJpgFile(SPIFFS, "/slurm_bg.jpg");
+          M5.Lcd.drawJpgFile(SPIFFS, "/done_bg.jpg");
         }
         delay(2000);
         if(SDinserted == true){
-          M5.Lcd.drawJpgFile(SD, "/bender_bg.jpg");
+          M5.Lcd.drawJpgFile(SD, "/design/main_bg.jpg");
         }else{
-          M5.Lcd.drawJpgFile(SPIFFS, "/bender_bg.jpg");
+          M5.Lcd.drawJpgFile(SPIFFS, "/main_bg.jpg");
         }
         olddisplay = state;
         serving.displaypage = 0;

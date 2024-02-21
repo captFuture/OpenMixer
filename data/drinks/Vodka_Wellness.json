@@ -1,0 +1,21 @@
+{
+    "cocktail": {
+        "ingredient": [
+            {
+                "id": "0",
+                "name": "Vodka",
+                "gamount": "20"
+            },
+            {
+                "id": "1",
+                "name": "Lemon",
+                "gamount": "10"
+            },
+            {
+                "id": "2",
+                "name": "Mineralwasser",
+                "amount": "200"
+            }
+        ]
+    }
+}

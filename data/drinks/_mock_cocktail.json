@@ -1,0 +1,48 @@
+{
+    "cocktail": {
+        "ingredient": [
+            {
+                "id": "0",
+                "name": "lemon",
+                "gamount": "10"
+            },
+            {
+                "id": "1",
+                "name": "vodka",
+                "gamount": "20"
+            },
+            {
+                "id": "2",
+                "name": "sparklingwater",
+                "amount": "200"
+            },
+            {
+                "id": "3",
+                "name": "rum",
+                "amount": "20"
+            },
+            {
+                "id": "4",
+                "name": "coke",
+                "amount": "160"
+            }
+            ,
+            {
+                "id": "5",
+                "name": "coke",
+                "amount": "160"
+            }
+            ,
+            {
+                "id": "6",
+                "name": "coke",
+                "amount": "160"
+            },
+            {
+                "id": "7",
+                "name": "coke",
+                "amount": "160"
+            }
+        ]
+    }
+}

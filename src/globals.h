@@ -13,6 +13,10 @@
 #define SAVE_SD
 bool SDinserted = false;
 
+#define FWURL "http://www.mrtarantl.online/ota/openmixer/alex/openmixer_v" 
+
+String fwVersionURL = "";
+
 int totalLength;       //total size of firmware
 int currentLength = 0; //current size of written firmware
 
@@ -65,15 +69,14 @@ struct Config {
   bool NETworkmode = true;
   char version[20] = xstr(VERSION);
   char mode[20] = xstr(MODE);
-  int pumps = xstr(PUMPS);
+  char pumps[5] = xstr(PUMPS);
 };
 Config config;
 
 // will be used for serving relays #define LED1 16
 // will be used for serving relays #define LED2 17
 
-#define SRELAY 16 //serving relay
-#define CRELAY 17 //cleaning relay
+
 
 // HX711 circuit wiring
 const int LOADCELL_DOUT_PIN = 36;
@@ -85,6 +88,7 @@ const int HX711_sck = 26;       //mcu > HX711 sck pin
 
 float calibrationValue = 741.58;
 int oldweight = 0;
+int16_t configNum = 0;
 
 int buttonPress;
 int timeout = 500;
@@ -118,3 +122,4 @@ char statusTopic[] = "openmixer/cocktail/status";
 char servingTopic[] = "openmixer/cocktail/serving";
 char inTopic[] = "openmixer/cocktail/cmd";
 char clearSDcommand[] = "clearsd";*/
+

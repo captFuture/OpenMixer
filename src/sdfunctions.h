@@ -8,7 +8,7 @@ void initializeSD(){
         DEBUG_INFORMATION_SERIAL.println("SDCard present"); 
     }
     if(SDinserted){
-        if (SD.exists("/drinks.csv")) {
+        if (SD.exists("/madedrinks.csv")) {
             DEBUG_INFORMATION_SERIAL.println("drinks.csv exists.");
             File drinksFile = SD.open("/madedrinks.csv", FILE_APPEND);
             drinksFile.println("exists NEW DATA ----------");
@@ -23,9 +23,6 @@ void initializeSD(){
     }
 }
 
-void initializeSD(){
-    //https://github.com/espressif/arduino-esp32/blob/master/libraries/SD/examples/SD_Test/SD_Test.ino
-}
 
 void readConfig(){
     if(SDinserted == true){
@@ -64,9 +61,9 @@ void readConfig(){
 
 void writePayload(){
     if(SDinserted == true){
-        File sensorFile = SD.open("/sensor.csv", FILE_APPEND);
+        File sensorFile = SD.open("/madedrinks.csv", FILE_APPEND);
         sprintf(sdmsg, sdFormat, measureTime, config.clientId, WiFi.RSSI());
-        DEBUG_INFORMATION_SERIAL.print("Writing Sensordata to SD: ");
+        DEBUG_INFORMATION_SERIAL.print("Writing madedrinks to SD: ");
         int written = sensorFile.println(sdmsg);
         DEBUG_INFORMATION_SERIAL.println(written);
         //DEBUG_SENSOR_SERIAL.println(sdmsg);
@@ -81,9 +78,9 @@ void writePayload(){
 
 void clearSDcontent(){
     if(SDinserted == true){
-        SD.remove("/drinks.csv");
-        File drinksFile = SD.open("/drinks.csv", FILE_WRITE);
-        DEBUG_INFORMATION_SERIAL.println("SDcard cleared - new drinks.csv added");
+        SD.remove("/madedrinks.csv");
+        File drinksFile = SD.open("/madedrinks.csv", FILE_WRITE);
+        DEBUG_INFORMATION_SERIAL.println("SDcard cleared - new madedrinks.csv added");
         drinksFile.close();
     }else{
         DEBUG_INFORMATION_SERIAL.println("SD not present - not clearing");
