@@ -3,7 +3,6 @@
 #include "globals.h"
 #include <Arduino.h>
 #include <M5Stack.h>
-#include <SPIFFS.h>
 #include <HX711_ADC.h>
 #include "UNIT_4RELAY.h"
 
@@ -19,11 +18,12 @@
 WiFiClient wifiClient;
 HTTPClient httpclient;
 HX711_ADC LoadCell(HX711_dout, HX711_sck);
-
 UNIT_4RELAY relay;
-
 TaskHandle_t servetask;
 TaskHandle_t measuretask;
+
+//TFT_eSPI    tft = TFT_eSPI();
+//TFT_eSprite spr_sd = TFT_eSprite(&tft);
 
 const int calVal_eepromAdress = 0;
 unsigned long t = 0;

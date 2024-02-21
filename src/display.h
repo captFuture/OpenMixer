@@ -63,9 +63,11 @@ void showSDStatus(){
   if(SDinserted == true){
     M5.Lcd.drawRect(100, 0, 20, 20, TFT_DARKGREY);
     M5.Lcd.fillRect(101, 1, 18, 18, GREEN);
+    M5.Lcd.drawString("S", 106, 3, 1);
   }else{
     M5.Lcd.drawRect(100, 0, 20, 20, TFT_DARKGREY);
     M5.Lcd.fillRect(101, 1, 18, 18, RED);
+    M5.Lcd.drawString("S", 106, 3, 1);
   }
 }
 
@@ -74,9 +76,11 @@ void showNetStatus(){
   if(config.NETworkmode == true){
     M5.Lcd.drawRect(122, 0, 20, 20, TFT_DARKGREY);
     M5.Lcd.fillRect(123, 1, 18, 18, GREEN);
+    M5.Lcd.drawString("N", 126, 3, 1);
   }else{
     M5.Lcd.drawRect(122, 0, 20, 20, TFT_DARKGREY);
     M5.Lcd.fillRect(123, 1, 18, 18, RED);
+    M5.Lcd.drawString("N", 126, 3, 1);
   }
 }
 
@@ -85,13 +89,17 @@ void showLoadStatus(){
   if(LoadCellok == 1){
     M5.Lcd.drawRect(122, 22, 20, 20, TFT_DARKGREY);
     M5.Lcd.fillRect(123, 23, 18, 18, GREEN);
+    M5.Lcd.drawString("W", 126, 24, 1);
   }else if(LoadCellok == 0){
     M5.Lcd.drawRect(122, 22, 20, 20, TFT_DARKGREY);
     M5.Lcd.fillRect(123, 23, 18, 18, RED);
+    M5.Lcd.drawString("W", 126, 24, 1);
   }else{
     M5.Lcd.drawRect(122, 22, 20, 20, TFT_DARKGREY);
     M5.Lcd.fillRect(123, 23, 18, 18, BLUE);
+    M5.Lcd.drawString("W", 126, 24, 1);
   }
+
 }
 
 void showDrinkWindow(){
