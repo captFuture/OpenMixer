@@ -1,7 +1,7 @@
 if(config.NETworkmode){
   if(strcmp(config.mode, "client") == 0){
     //connect to Network in config.json
-    DEBUG_INFORMATION_SERIAL.print("Wifi Mode Client");
+    DEBUG_INFORMATION_SERIAL.println("Wifi Mode Client");
     WiFi.mode(WIFI_STA);
     WiFi.hostname(config.clientId);
     WiFi.setHostname(config.clientId);

@@ -51,7 +51,7 @@ void setup() {
   Wire.begin();
   initializeSD(); 
   readConfig();
-
+  delay(2000);
   Serial.begin(115200);
   if (SPIFFS.begin()) {
 		Serial.println("SPIFFS MOUNTED");
@@ -60,8 +60,8 @@ void setup() {
 
   DEBUG_INFORMATION_SERIAL.print("Network: "); DEBUG_INFORMATION_SERIAL.println(config.NETworkmode); 
   DEBUG_INFORMATION_SERIAL.print("Networkmode: "); DEBUG_INFORMATION_SERIAL.println(config.mode); 
-  DEBUG_INFORMATION_SERIAL.println();
   DEBUG_INFORMATION_SERIAL.print("Current firmware: v");  Serial.println(FWversion);
+  DEBUG_INFORMATION_SERIAL.print("Pumps: ");  Serial.println(config.pumps);
   DEBUG_INFORMATION_SERIAL.println("Starting...");
 
   #include <network.h>

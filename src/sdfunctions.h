@@ -27,10 +27,10 @@ void initializeSD(){
 void readConfig(){
     if(SDinserted == true){
         File configFile = SD.open("/config.json", FILE_READ);
-        DEBUG_INFORMATION_SERIAL.print("Reading config from SD: ");
+        DEBUG_INFORMATION_SERIAL.println("Reading config from SD: ");
 
 
-        StaticJsonDocument<512> doc;
+        StaticJsonDocument<700> doc;
         DeserializationError error = deserializeJson(doc, configFile);
         if (error){
             Serial.println(F("Failed to read file, using default configuration"));      
@@ -43,13 +43,15 @@ void readConfig(){
         strlcpy(config.liquid2, doc["liquid2"] | xstr(LIQUID2), sizeof(config.liquid2));
         strlcpy(config.liquid3, doc["liquid3"] | xstr(LIQUID3), sizeof(config.liquid3));
         strlcpy(config.liquid4, doc["liquid4"] | xstr(LIQUID4), sizeof(config.liquid4));
-        strlcpy(config.liquid4, doc["liquid5"] | xstr(LIQUID4), sizeof(config.liquid5));
-        strlcpy(config.liquid4, doc["liquid6"] | xstr(LIQUID4), sizeof(config.liquid6));
-        strlcpy(config.liquid4, doc["liquid7"] | xstr(LIQUID4), sizeof(config.liquid7));
+        strlcpy(config.liquid5, doc["liquid5"] | xstr(LIQUID5), sizeof(config.liquid5));
+        strlcpy(config.liquid6, doc["liquid6"] | xstr(LIQUID6), sizeof(config.liquid6));
+        strlcpy(config.liquid7, doc["liquid7"] | xstr(LIQUID7), sizeof(config.liquid7));
 
         strlcpy(config.clientId, doc["clientid"] | xstr(CLIENTID), sizeof(config.clientId));
         strlcpy(config.ssid, doc["ssid"] | xstr(SSID), sizeof(config.ssid));
         strlcpy(config.password, doc["password"] | xstr(PASSWORD), sizeof(config.password));
+        strlcpy(config.mode, doc["client"] | xstr(MODE), sizeof(config.mode));
+        strlcpy(config.pumps, doc["pumps"] | xstr(PUMPS), sizeof(config.pumps));
         config.NETworkmode = doc["networkmode"] | false;
 
         configFile.close();
