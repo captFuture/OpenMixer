@@ -46,6 +46,7 @@ struct Serving {
 Serving serving;
 
 int olddisplay = 3;
+int reconretries = 0;
 
 #define ARRAYSIZE 10
 #define FWversion xstr(VERSION)

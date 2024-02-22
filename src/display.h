@@ -74,9 +74,16 @@ void showSDStatus(){
 //top right
 void showNetStatus(){
   if(config.NETworkmode == true){
-    M5.Lcd.drawRect(122, 0, 20, 20, TFT_DARKGREY);
-    M5.Lcd.fillRect(123, 1, 18, 18, GREEN);
-    M5.Lcd.drawString("N", 126, 3, 1);
+    if(strcmp(config.mode, "client") == 0){
+      M5.Lcd.drawRect(122, 0, 20, 20, TFT_DARKGREY);
+      M5.Lcd.fillRect(123, 1, 18, 18, GREEN);
+      M5.Lcd.drawString("N", 126, 3, 1);
+    }else{
+      M5.Lcd.drawRect(122, 0, 20, 20, TFT_DARKGREY);
+      M5.Lcd.fillRect(123, 1, 18, 18, TFT_YELLOW);
+      M5.Lcd.drawString("N", 126, 3, 1);
+    }
+
   }else{
     M5.Lcd.drawRect(122, 0, 20, 20, TFT_DARKGREY);
     M5.Lcd.fillRect(123, 1, 18, 18, RED);

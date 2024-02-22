@@ -74,7 +74,11 @@ void checkupdate(){
 void buttonHandling(){
   if (M5.BtnA.pressedFor(5000)) {
     if(config.NETworkmode){
-      checkupdate();
+      if(strcmp(config.mode, "client") == 0){
+        checkupdate();
+      }else{
+        
+      }
     }
     buttonPress = 0;
     delay(2000);

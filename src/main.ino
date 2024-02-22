@@ -8,12 +8,14 @@
 
 /* wifi  */
 #include <SPI.h>
+#include <WiFi.h>
+
 #include <WiFiUdp.h>
 #include <ESPmDNS.h>
 #include <Update.h>
 
 /* wifimanager */
-#include <WiFiManager.h>
+//#include <WiFiManager.h>
 
 WiFiClient wifiClient;
 HTTPClient httpclient;
@@ -56,7 +58,8 @@ void setup() {
 	}
   delay(10);
 
-  DEBUG_INFORMATION_SERIAL.print("Networkmode: "); DEBUG_INFORMATION_SERIAL.println(config.NETworkmode); 
+  DEBUG_INFORMATION_SERIAL.print("Network: "); DEBUG_INFORMATION_SERIAL.println(config.NETworkmode); 
+  DEBUG_INFORMATION_SERIAL.print("Networkmode: "); DEBUG_INFORMATION_SERIAL.println(config.mode); 
   DEBUG_INFORMATION_SERIAL.println();
   DEBUG_INFORMATION_SERIAL.print("Current firmware: v");  Serial.println(FWversion);
   DEBUG_INFORMATION_SERIAL.println("Starting...");
@@ -73,8 +76,6 @@ void setup() {
 
   setDisplay(serving.displaypage);
   randomSeed(analogRead(0));
-
-
 }
 
 void loop() {
@@ -89,8 +90,26 @@ void loop() {
   }
 
  if(config.NETworkmode){
-
-    delay(100);
-  }
+  if(strcmp(config.mode, "client") == 0){
+    if ((WiFi.status() != WL_CONNECTED)) {
+      DEBUG_INFORMATION_SERIAL.print("Reconnecting to WiFi... retry "); DEBUG_INFORMATION_SERIAL.println(reconretries);
+      if(reconretries >= 10){
+        strncpy(config.mode, "ap", sizeof config.mode);
+        DEBUG_INFORMATION_SERIAL.println("Wifi Mode Accesspoint");
+        WiFi.mode(WIFI_AP);
+        WiFi.softAP(config.ssid, config.password);
+        IPAddress IP = WiFi.softAPIP();
+        DEBUG_INFORMATION_SERIAL.print("AP IP address: "); Serial.println(IP);
+      }else{
+        WiFi.disconnect();
+        WiFi.reconnect();
+        reconretries++;
+      }
+    }else{
+      reconretries = 0;
+    }
+  }else{}
+  delay(100);
+ }
   
 }
