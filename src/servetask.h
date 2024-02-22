@@ -14,18 +14,6 @@ void pumpitUp(){
         showBar(i,0,0,factor);
         delay(100);
     }  
-    for (int i=0; i <= atoi(config.liquid2); i++){
-        showBar(atoi(config.liquid1),i,0,factor);
-        delay(100);
-    }  
-    for (int i=0; i <= atoi(config.liquid3); i++){
-        showBar(atoi(config.liquid1),atoi(config.liquid2),i, factor);
-        delay(100);
-    }
-    for (int i=0; i <= atoi(config.liquid4); i++){
-        showBar(atoi(config.liquid1),atoi(config.liquid2),i, factor);
-        delay(100);
-    }    
 }
 
 void showServeStats(){
@@ -46,11 +34,11 @@ void showServeStats(){
     DEBUG_INFORMATION_SERIAL.print(" | liquid0: "); DEBUG_INFORMATION_SERIAL.print(atoi(config.liquid0));
     DEBUG_INFORMATION_SERIAL.print(" | liquid1: "); DEBUG_INFORMATION_SERIAL.print(atoi(config.liquid1));
     DEBUG_INFORMATION_SERIAL.print(" | liquid2: "); DEBUG_INFORMATION_SERIAL.print(atoi(config.liquid2));
-    DEBUG_INFORMATION_SERIAL.print(" | liquid3: "); DEBUG_INFORMATION_SERIAL.println(atoi(config.liquid3));
-    DEBUG_INFORMATION_SERIAL.print(" | liquid4: "); DEBUG_INFORMATION_SERIAL.println(atoi(config.liquid4));
-    DEBUG_INFORMATION_SERIAL.print(" | liquid5: "); DEBUG_INFORMATION_SERIAL.println(atoi(config.liquid5));
-    DEBUG_INFORMATION_SERIAL.print(" | liquid6: "); DEBUG_INFORMATION_SERIAL.println(atoi(config.liquid6));
-    DEBUG_INFORMATION_SERIAL.print(" | liquid7: "); DEBUG_INFORMATION_SERIAL.println(atoi(config.liquid7));
+    DEBUG_INFORMATION_SERIAL.print(" | liquid3: "); DEBUG_INFORMATION_SERIAL.print(atoi(config.liquid3));
+    DEBUG_INFORMATION_SERIAL.print(" | liquid4: "); DEBUG_INFORMATION_SERIAL.print(atoi(config.liquid4));
+    DEBUG_INFORMATION_SERIAL.print(" | liquid5: "); DEBUG_INFORMATION_SERIAL.print(atoi(config.liquid5));
+    DEBUG_INFORMATION_SERIAL.print(" | liquid6: "); DEBUG_INFORMATION_SERIAL.print(atoi(config.liquid6));
+    DEBUG_INFORMATION_SERIAL.print(" | liquid7: "); DEBUG_INFORMATION_SERIAL.print(atoi(config.liquid7));
 }
 
 void switchPump(int pump, int status, int amount){
@@ -61,7 +49,8 @@ void switchPump(int pump, int status, int amount){
         DEBUG_INFORMATION_SERIAL.print("Pump on: ");  DEBUG_INFORMATION_SERIAL.println(pump);
         while(serving.weight < amount){
             relay.relayWrite(pump, 1);
-            showServeStats();
+
+            //showServeStats();
         }
         if(pump == 0){
             DEBUG_INFORMATION_SERIAL.println("Current Pump is 0 Next Pump is 1");
@@ -173,10 +162,11 @@ void servetaskCode(void* pvParameters) {
         //showServeStats();
         //if(serving.led1 == 1){switchLed(LED1, 1);}else{switchLed(LED1, 0);};
         //if(serving.led2 == 1){switchLed(LED2, 1);}else{switchLed(LED2, 0);};
-
+        //
         if(serving.servestatus == 1){
+            
             showServeStats();
-
+            DEBUG_INFORMATION_SERIAL.print("servetaskCode servestatus: "); DEBUG_INFORMATION_SERIAL.println(serving.servestatus);
             if(serving.pump0 == 1){switchPump(0, 1, atoi(config.liquid0));}else{switchPump(0, 0, 0);};
             if(serving.pump1 == 1){switchPump(1, 1, atoi(config.liquid0)+atoi(config.liquid1));}else{switchPump(1, 0, 0);};
             if(serving.pump2 == 1){switchPump(2, 1, atoi(config.liquid0)+atoi(config.liquid1)+atoi(config.liquid2));}else{switchPump(2, 0, 0);};

@@ -134,7 +134,14 @@ void buttonHandling(){
     serving.servestatus = 0;
     serving.led1 = 0;
     serving.led2 = 0;
-    
+    serving.pump0  = 0;
+    serving.pump1  = 0;
+    serving.pump2  = 0;
+    serving.pump3  = 0;
+    serving.pump4  = 0;
+    serving.pump5  = 0;
+    serving.pump6  = 0;
+    serving.pump7  = 0;
   } else {
   }
 }
