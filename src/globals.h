@@ -87,7 +87,7 @@ const int LOAD_CELL_GAIN = 32;
 const int HX711_dout = 36;      //mcu > HX711 dout pin
 const int HX711_sck = 26;       //mcu > HX711 sck pin
 
-float calibrationValue = 741.58;
+float calibrationValue = 1020;
 int oldweight = 0;
 int16_t configNum = 0;
 

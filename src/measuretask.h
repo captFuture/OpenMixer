@@ -1,6 +1,6 @@
 void loadCellHandling(){
   static boolean newDataReady = 0;
-  const int serialPrintInterval = 10;
+  const int serialPrintInterval = 5;
   
   if (LoadCell.update()) newDataReady = true;
   if (newDataReady){
@@ -20,6 +20,6 @@ void measuretaskCode(void* pvParameters) {
         //Serial.print("measuretask running on core ");
         //Serial.println(xPortGetCoreID());
         loadCellHandling();
-        delay(200);
+        delay(100);
     }
 }
