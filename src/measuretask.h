@@ -1,16 +1,16 @@
 void loadCellHandling(){
-  static boolean newDataReady = 0;
-  const int serialPrintInterval = 5;
-  
-  if (LoadCell.update()) newDataReady = true;
-  if (newDataReady){
-      float weightf = LoadCell.getData();
-      serving.weight=(int)weightf;
-      if(weightf <= 0){ weightf = 0;}
-
-      if(serving.weight <= 0){ serving.weight = 0;}
-      newDataReady = 0;
-  }
+    #ifdef USE_M5MINISCALES
+    #else
+        static boolean newDataReady = 0;
+        if (LoadCell.update()) newDataReady = true;
+        if(newDataReady){
+            float weightf = LoadCell.getData();
+            serving.weight=(int)weightf;
+            if(weightf <= 0){ weightf = 0;}
+            if(serving.weight <= 0){ serving.weight = 0;}
+            newDataReady = 0;
+        }
+    #endif
 }
 
 void measuretaskCode(void* pvParameters) {
@@ -20,6 +20,6 @@ void measuretaskCode(void* pvParameters) {
         //Serial.print("measuretask running on core ");
         //Serial.println(xPortGetCoreID());
         loadCellHandling();
-        delay(100);
+        delay(100);  
     }
 }

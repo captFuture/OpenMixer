@@ -1,3 +1,5 @@
+
+
 void pumpitUp(){
 
     DEBUG_INFORMATION_SERIAL.println(atoi(config.liquid1));
@@ -139,7 +141,11 @@ void switchPump(int pump, int status, int amount){
             serving.led1 = 0;
             serving.led2 = 0;
             serving.servestatus = 0;
-            LoadCell.tare();
+            #ifdef USE_M5MINISCALES
+                scales.setOffset();
+            #else
+                LoadCell.tare();
+            #endif
             DEBUG_INFORMATION_SERIAL.println("DRINK DONE");
             serving.displaypage = 1;
             return;
@@ -189,7 +195,6 @@ void servetaskCode(void* pvParameters) {
             serving.pump7 = 0;
         }
         delay(200);
-        
     }
 }
 

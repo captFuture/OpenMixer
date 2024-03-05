@@ -105,7 +105,11 @@ void buttonHandling(){
     switchDisplay(1);
     buttonPress = 0;
     DEBUG_INFORMATION_SERIAL.println("Taring scale.");
-    LoadCell.tare();
+    #ifdef USE_M5MINISCALES
+      scales.setOffset();
+    #else
+        LoadCell.tare();
+    #endif
     delay(100);
     serving.servestatus = 0;
     serving.led1 = 0;
@@ -117,7 +121,11 @@ void buttonHandling(){
     switchDisplay(1);
     buttonPress = 0;
     DEBUG_INFORMATION_SERIAL.println("MAKING DRINK");
-    LoadCell.tare();
+    #ifdef USE_M5MINISCALES
+        scales.setOffset();
+    #else
+        LoadCell.tare();
+    #endif
     delay(100);
     serving.servestatus = 1;
     serving.led1 = 1;

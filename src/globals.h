@@ -13,6 +13,8 @@
 #define SAVE_SD
 bool SDinserted = false;
 
+#define USE_M5MINISCALES
+
 #define FWURL "http://www.mrtarantl.online/ota/openmixer/alex/openmixer_v" 
 
 String fwVersionURL = "";
@@ -83,9 +85,6 @@ Config config;
 const int LOADCELL_DOUT_PIN = 36;
 const int LOADCELL_SCK_PIN = 26;
 const int LOAD_CELL_GAIN = 32;
-
-const int HX711_dout = 36;      //mcu > HX711 dout pin
-const int HX711_sck = 26;       //mcu > HX711 sck pin
 
 float calibrationValue = 1020;
 int oldweight = 0;
